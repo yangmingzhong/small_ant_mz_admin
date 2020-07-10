@@ -1,0 +1,55 @@
+{include file="public/header" /}
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+
+        <script type="text/html" id="statusTxt">
+            {{#  if(d.status == 1){ }}
+            <button class="layui-btn layui-btn-success layui-btn-xs">启用</button>
+            {{#  } else { }}
+            <button class="layui-btn layui-btn-danger layui-btn-xs">禁用</button>
+            {{#  } }}
+        </script>
+
+
+    </div>
+</div>
+<script>
+    layui.use(['form', 'table'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table;
+
+        table.render({
+            elem: '#currentTableId',
+            url: '{:url("Log/loginLog")}',
+            toolbar: '#toolbarDemo',
+            defaultToolbar: ['filter', 'exports', 'print', {
+                title: '{:lang("INFO")}',
+                layEvent: 'LAYTABLE_TIPS',
+                icon: 'layui-icon-tips'
+            }],
+            cols: [[
+                {field: 'log_id', width: 80, title: 'ID'},
+                {field: 'user_name', width: 200, title: '{:lang("USERNAME")}'},
+                {field: 'login_ip', width: 250, title: '{:lang("LAST_LOGIN_IP")}'},
+                {field: 'login_area', width: 450, title: '{:lang("LAST_LOGIN_AREA")}'},
+                {field: 'create_time', width: 250, title: '{:lang("LAST_LOGIN_TIME")}'},
+            ]],
+            limits: [10, 15, 20, 25, 50, 100],
+            limit: 15,
+            page: true,
+            skin: 'line'
+        });
+
+
+    });
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,187 @@
+{include file="public/header" /}
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">{:lang('TITLE')}</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="required" lay-reqtext="{:lang('TITLE_NOTEMPTY')}" placeholder="{:lang('TITLE_INPUT')}" value="{$save_data.title}" class="layui-input">
+            <tip></tip>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label ">{:lang('SUBTITLE')}</label>
+        <div class="layui-input-block">
+            <input type="text" name="subtitle"  placeholder="{:lang('SUBTITLE_INPUT')}" value="{$save_data.subtitle}" class="layui-input">
+            <tip></tip>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">{:lang('IMG_URL')}</label>
+        <div class="layui-input-block" id="upload_img">
+             {if $save_data.img_url}
+            <div >
+                <a href="{$save_data.img_url}" target="_blank"><img src="{$save_data.img_url}" class="upload-down-img"></a>
+                <div class="upload-down-img-delete layui-icon layui-icon-delete" onclick="clearImgData(this)"></div>
+                <input type="hidden" name="img_url"  value="{$save_data.img_url}">
+            </div>
+            {/if}
+        </div>
+
+        <div class="layui-input-block"></div>
+        <div class="layui-input-block">
+            <button type="button" class="layui-btn"  id="upload_one">
+                <i class="layui-icon">&#xe67c;</i>{:lang('IMAGE_UPLOAD')}
+            </button>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label ">{:lang('IMGS_URL')}</label>
+        <div class="layui-input-block" id="upload_imgs">
+            {if !empty($save_data.imgs_url_arr)}
+            {foreach $save_data.imgs_url_arr as $key=>$val}
+            <div style="display: inline-block">
+                <a href="{$val}" target="_blank"><img src="{$val}" class="upload-down-img"></a>
+                <div class="upload-down-img-delete layui-icon layui-icon-delete" onclick="clearImgData(this)"></div>
+                <input type="hidden" name="imgs_url_a[]"  value="{$val}">
+            </div>
+            {/foreach}
+            {/if}
+        </div>
+        <div class="layui-input-block"></div>
+        <div class="layui-input-block">
+            <!--            <button type="button" class="layui-btn" onclick="uploadImg('#upload_one','#upload_one_hide','{:url(\'Article/uploadImg\')}')" id="upload_one">-->
+            <button type="button" class="layui-btn"  id="upload_ones">
+
+                <i class="layui-icon">&#xe67c;</i>{:lang('IMAGE_UPLOAD')}
+            </button>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">{:lang('ENABLED_STATUS')}</label>
+        <div class="layui-input-block">
+            <input type="radio" name="status" value="1" title="{:lang('ENABLED')}" {if $save_data.status==1}checked{/if} >
+            <input type="radio" name="status" value="0" title="{:lang('DISABLED')}" {if $save_data.status==0}checked{/if} >
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">{:lang('CONTENT')}</label>
+        <div class="layui-input-block">
+            <div id="editorWang"></div>
+            <textarea name="content" id="content"  class="layui-textarea" placeholder="{:lang('CONTENT_INPUT')}" style="display: none">{$save_data.content}</textarea>
+        </div>
+    </div>
+    <input type="hidden" name="id" value="{$save_data.id}">
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">{:lang('SAVE')}</button>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    //UploadDom绑定元素 ,UploadDomHide 隐藏域的标识 要上传服务端 的值 ,UploadURL上传链接 ,UploadDomImg 图片展示位置,ImgFile文件域的字段名 Multiple 是否开启多图片上传
+    //单图
+    var UploadDom="#upload_one",UploadDomHide="img_url",UploadDomImg="#upload_img",UploadURLIMG= "{:url('Article/uploadImg')}",Multiple=false,ImgFile='img_file';
+    function clearImgData(obj) {
+        obj.parentNode.remove()
+    }
+    //UploadDom绑定元素 ,UploadDomHide 隐藏域的标识 ,UploadURL上传链接 , ImgFile文件域的字段名 Multiple 是否开启多图片上传
+    layui.use('upload', function(){
+        var upload = layui.upload;
+        var $ = layui.$;
+        //执行实例
+        var uploadInst = upload.render({
+            elem: UploadDom //绑定元素
+            ,url: UploadURLIMG,//上传接口
+            acceptMime: 'image/*',
+            accept:'images',
+            field:ImgFile,
+            multiple:Multiple,
+
+            done: function(res, index, upload){  //成功后执行函数
+                if(res.code ==  0){ //存入作用域
+                    if(Multiple == false) {
+                        var html = ' <div >\n' +
+                            ' <img src="'+res.data.src+'" class="upload-down-img">\n' +
+                            '  <div class="upload-down-img-delete layui-icon layui-icon-delete" onclick="clearImgData(this)"></div>\n' +
+                            '  <input type="hidden" name="'+UploadDomHide+'" value="'+res.data.src+'">\n' +
+                            ' </div>';
+                        $(UploadDomImg).html(html);
+                    }else{
+                        var html = ' <div style="display: inline-block">\n' +
+                            ' <img src="'+res.data.src+'" class="upload-down-img">\n' +
+                            '  <div class="upload-down-img-delete layui-icon layui-icon-delete" onclick="clearImgData(this)"></div>\n' +
+                            '  <input type="hidden" name="'+UploadDomHide+'[]" value="'+res.data.src+'">\n' +
+                            ' </div>';
+                        $(UploadDomImg).html(html);
+                    }
+                }
+                layer.closeAll('loading'); //关闭loading
+            }
+            ,error: function(){
+                uploadInst.upload();
+                layer.closeAll('loading');
+            }
+        });
+
+        //执行实例
+        var uploadInsts = upload.render({
+            elem: '#upload_ones' //绑定元素
+            ,url: UploadURLIMG,//上传接口
+            acceptMime: 'image/*',
+            accept:'images',
+            field:ImgFile,
+            multiple:true,
+
+            done: function(res, index, upload){  //成功后执行函数
+                if(res.code ==  0){ //存入作用域
+
+                    var html = ' <div style="display: inline-block">\n' +
+                        ' <img src="'+res.data.src+'" class="upload-down-img">\n' +
+                        '  <div class="upload-down-img-delete layui-icon layui-icon-delete" onclick="clearImgData(this)"></div>\n' +
+                        '  <input type="hidden" name="imgs_url_a[]" value="'+res.data.src+'">\n' +
+                        ' </div>';
+                    $('#upload_imgs').append(html);
+
+                }
+                layer.closeAll('loading'); //关闭loading
+            }
+            ,error: function(){
+                uploadInsts.upload();
+                layer.closeAll('loading');
+            }
+        });
+    });
+
+</script>
+
+<!--<script>-->
+<!--    //不支持重复重载   layui upload-->
+<!--    //UploadDom绑定元素 ,UploadDomHide 隐藏域的标识 要上传服务端 的值 ,UploadURL上传链接 ,UploadDomImg 图片展示位置,ImgFile文件域的字段名 Multiple 是否开启多图片上传-->
+<!--    //多图，加载不同参数-->
+<!--    var UploadDom="#upload_ones",UploadDomHide="imgs_url",UploadDomImg="#upload_imgs",UploadURLIMG= "{:url('Article/uploadImg')}",Multiple=true,ImgFile='img_file';-->
+<!--</script>-->
+<!--<script src="__JS__/uploadImg.js" charset="utf-8"></script>-->
+<script>
+
+    //添加连接
+    var Save_Url_Form = '{:url("Article/edit")}';
+    var EditorID = '#content';
+    var EditorWangID = '#editorWang';
+    var UploadFileName = 'img_file_editor';
+    var UploadURL = '{:url("Article/uploadImgEditor")}';
+</script>
+<script src="__JS__/saveFrom.js" charset="utf-8"></script>
+<script src="__JS__/wangEditor.js" charset="utf-8"></script>
+</body>
+</html>

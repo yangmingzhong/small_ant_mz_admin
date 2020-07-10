@@ -1,0 +1,46 @@
+{include file="public/header" /}
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">{:lang('ROLE_NAME')}</label>
+        <div class="layui-input-block">
+            <input type="text" name="role_name" lay-verify="required" lay-reqtext="{:lang('ROLE_NAME_NOTEMPTY')}" placeholder="{:lang('ROLE_NAME_INPUT')}" value="{$role_data.role_name}" class="layui-input">
+            <tip></tip>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">{:lang('ENABLED_STATUS')}</label>
+        <div class="layui-input-block">
+            <input type="radio" name="status" value="1" title="{:lang('ENABLED')}" {if $role_data.status==1}checked{/if} >
+            <input type="radio" name="status" value="0" title="{:lang('DISABLED')}" {if $role_data.status==0}checked{/if} >
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">{:lang('DESCRIPTION')}</label>
+        <div class="layui-input-block">
+            <textarea name="remarks" class="layui-textarea" placeholder="{:lang('REMARK_MESS_INPUT')}">{$role_data.remarks}</textarea>
+        </div>
+    </div>
+    <input type="hidden" name="role_id" value="{$role_data.role_id}">
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">{:lang('SAVE')}</button>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    //添加连接
+    var Save_Url_Form = '{:url("role/edit")}';
+</script>
+<script src="__JS__/saveFrom.js" charset="utf-8"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+{include file="public/header" /}
+
+<style>
+        .layui-btn:not(.layui-btn-lg ):not(.layui-btn-sm):not(.layui-btn-xs) {
+            height: 34px;
+            line-height: 34px;
+            padding: 0 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="layuimini-container layui-form">
+    <div class="layuimini-main">
+
+        <div>
+            <div class="layui-btn-group">
+                <button class="layui-btn" id="btn-expand">{:lang('EXAND_ALL')}</button>
+                <button class="layui-btn layui-btn-normal" id="btn-fold">{:lang('COLLAPSE_ALL')}</button>
+            </div>
+            <table id="munu-table" class="layui-table" lay-filter="munu-table"></table>
+        </div>
+
+
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" style="width: 150px;" lay-submit lay-filter="save_data">{:lang('SAVE')}</button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    layui.use(['form', 'treeTable'], function () {
+        var $ = layui.jquery;
+        var form = layui.form;
+        var treetable = layui.treeTable;
+
+        // 渲染表格
+        layer.load(2);
+       var insTb = treetable.render({
+            elem: '#munu-table',
+            url: '{:url("roleSetting")}?role_id={$role_info.role_id}',
+           height: 'full-100',
+           tree: {
+               iconIndex: 1,
+               isPidData: true,
+               idName: 'node_id',
+               pidName: 'node_pid'
+           },
+            cols: [[
+                {type: "checkbox", width: 50},
+                {field: 'menuname', minWidth: 200, title: '{:lang("MENU_NAME")}'},
+                {
+                    field: 'is_menu', width: 400, align: 'center', templet: function (d) {
+                        if (d.is_menu == 1) {
+                            return '<span class="layui-badge layui-bg-gray">{:lang("BUTTON")}</span>';
+                        }
+                        if (d.is_menu == 2) {
+                            return '<span class="layui-badge layui-bg-blue">{:lang("MENU")}</span>';
+                        }
+                    }, title: '{:lang("TYPES_OF")}'
+                }
+
+            ]],
+            done: function () {
+                layer.closeAll('loading');
+            }
+        });
+
+        $('#btn-expand').click(function () {
+            insTb.expandAll('#munu-table');
+        });
+
+        $('#btn-fold').click(function () {
+            insTb.foldAll('#munu-table');
+        });
+
+
+        form.on('submit(save_data)', function(obj){
+            var saveRoleid = [];
+            JSON.stringify(insTb.checkStatus().map(function (d) {
+
+                saveRoleid.push(d.node_id);
+            }), null, 3)
+
+            $.post('{:url("roleSetting")}', {saveRoleid:JSON.stringify(saveRoleid),role_id:'{$role_info.role_id}'}, function (res) {
+                if(200 == res.code) {
+
+                    // 成功的提示
+                    layer.msg(res.msg, {
+                        offset: '15px'
+                        ,icon: 1
+                        ,time: 1500
+                    }, function(){
+                        var iframeIndex = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(iframeIndex);
+                    });
+                } else {
+                    layer.msg(res.msg, {anim: 6});
+                }
+            }, 'json');
+            return false;
+
+        });
+
+    });
+</script>
+</body>
+</html>

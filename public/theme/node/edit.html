@@ -1,0 +1,75 @@
+{include file="public/header" /}
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">{:lang('MENU_NAME')}</label>
+        <div class="layui-input-block">
+            <input type="text"  class="layui-input" value="{$parent_data.parent_txt}" readonly style="background: #dda1a1">
+            <tip></tip>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">{:lang('MENU_NAME')}</label>
+        <div class="layui-input-block">
+            <input type="text" name="node_name" lay-verify="required" lay-reqtext="{:lang('MENU_NAME_NOTEMPTY')}" placeholder="{:lang('MENU_NAME_INPUT')}" value="{$save_data.node_name}" class="layui-input">
+            <tip></tip>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">{:lang('MENU_NAME_EN')}</label>
+        <div class="layui-input-block">
+            <input type="text" name="node_enname" lay-verify="required" lay-reqtext="{:lang('MENU_NAME_EN_NOTEMPTY')}" placeholder="{:lang('MENU_NAME_EN_INPUT')}" value="{$save_data.node_enname}" class="layui-input">
+            <tip></tip>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">{:lang('MENU_URL')}</label>
+        <div class="layui-input-block">
+            <input type="text" name="node_path"  placeholder="{:lang('MENU_URL_INPUT')}" value="{$save_data.node_path}" class="layui-input">
+            <tip></tip>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">{:lang('MENU_ICO')}</label>
+        <div class="layui-input-block">
+            <input type="text" name="node_icon"  placeholder="layui-icon layui-icon-template-1" value="{$save_data.node_icon}" class="layui-input">
+            <tip></tip>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">{:lang('SORT')}</label>
+        <div class="layui-input-block">
+            <input type="number" name="node_order" min="0" placeholder="{:lang('SORT_DESC')}" value="{$save_data.node_order}" class="layui-input">
+            <tip>{:lang('SORT_DESC')}</tip>
+
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">{:lang('MENU_STATUS')}</label>
+        <div class="layui-input-block">
+            <input type="radio" name="is_menu" value="1" title="{:lang('NO')}" {if $save_data.is_menu==1}checked{/if} >
+         {if $parent_data['node_ppid'] == 0}   <input type="radio" name="is_menu" value="2" title="{:lang('YES')}" {if $save_data.is_menu==2}checked{/if} > {/if}
+        </div>
+    </div>
+
+    <input type="hidden" name="node_id" value="{$save_data.node_id}">
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">{:lang('SAVE')}</button>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    //添加连接
+    var Save_Url_Form = '{:url("node/edit")}';
+</script>
+<script src="__JS__/saveFromTreeTable.js" charset="utf-8"></script>
+</body>
+</html>
