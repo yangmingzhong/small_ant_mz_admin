@@ -105,7 +105,7 @@ INSERT INTO `ant_node` VALUES ('4', '权限管理', 'Authority Management', '#',
 INSERT INTO `ant_node` VALUES ('5', '管理员管理', 'Manage Administrator', '/adminback/UserManage/index', '4', '0', '', '2', '2020-07-03 14:27:42');
 INSERT INTO `ant_node` VALUES ('6', '添加管理员', 'Add Administrator', 'adminback/UserManage/addAdminUser', '5', '0', '', '1', '2020-07-03 14:28:26');
 INSERT INTO `ant_node` VALUES ('7', '编辑管理员', 'Edit Administrator', '/adminback/UserManage/editAdminUser', '5', '0', '', '1', '2020-07-03 14:28:43');
-INSERT INTO `ant_node` VALUES ('8', '删除管理员', 'Remove Administrator', '/adminback/UserManager/delAdminUser', '5', '0', '', '1', '2020-07-03 14:29:14');
+INSERT INTO `ant_node` VALUES ('8', '删除管理员', 'Remove Administrator', '/adminback/UserManage/delAdminUser', '5', '0', '', '1', '2020-07-03 14:29:14');
 INSERT INTO `ant_node` VALUES ('9', '日志管理', 'Log Manage', '#', '0', '3', 'layui-icon layui-icon-table', '2', '2020-07-08 16:07:36');
 INSERT INTO `ant_node` VALUES ('10', '清除菜单缓存', 'Clear Menu Cache', '/adminback/index/clearMenuCache', '1', '0', null, '1', '2020-07-07 14:41:07');
 INSERT INTO `ant_node` VALUES ('11', '登录日志', 'Login log', '/adminback/log/loginLog', '9', '2', '', '2', '2020-07-08 16:26:27');
@@ -119,7 +119,7 @@ INSERT INTO `ant_node` VALUES ('18', '节点管理', 'Node Manage', '/adminback/
 INSERT INTO `ant_node` VALUES ('19', '添加节点', 'Add Node', '/adminback/node/add', '18', '0', '', '1', '2020-07-09 21:42:51');
 INSERT INTO `ant_node` VALUES ('20', '编辑节点', 'Edit Node', '/adminback/node/edit', '18', '0', '', '1', '2020-07-09 21:43:29');
 INSERT INTO `ant_node` VALUES ('21', '删除节点', 'Delete Node', '/adminback/node/delete', '18', '0', '', '1', '2020-07-09 21:43:44');
-INSERT INTO `ant_node` VALUES ('22', '拉黑（启用）管理员', 'Blackout (enable) administrator', '/adminback/UserManager/statusAdminUser', '5', '0', '', '1', null);
+INSERT INTO `ant_node` VALUES ('22', '拉黑（启用）管理员', 'Blackout (enable) administrator', '/adminback/UserManage/statusAdminUser', '5', '0', '', '1', null);
 INSERT INTO `ant_node` VALUES ('23', '拉黑（启用）角色', 'Blackout (Enable) Eole', '/adminback/role/statusRole', '13', '0', '', '1', null);
 INSERT INTO `ant_node` VALUES ('24', '文章管理', 'Article Management', '#', '0', '2', 'layui-icon layui-icon-read', '2', '2020-07-08 10:47:57');
 INSERT INTO `ant_node` VALUES ('25', '文章列表', 'Article List', '/adminback/Article/index', '24', '0', '', '2', '2020-07-08 10:49:42');
