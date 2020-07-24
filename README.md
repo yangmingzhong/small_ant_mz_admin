@@ -9,22 +9,22 @@ gitee:https://gitee.com/yangmingzhong/small_ant_mz
 开源前端框架 https://www.layui.com/  
 开源后台  layuimini https://gitee.com/zhongshaofa/layuimini
 
-## 先看看效果（github无法显示的话，可下载下来再看看项目imgscreen 文件夹）
-![](./imgscreen/one.png) 
+## 先看看效果（github无法显示的话，可下载下来再看看项目imgscreens 文件夹）
+![](./imgscreens/one.png) 
 
-![](./imgscreen/two.png) 
+![](./imgscreens/two.png) 
 
-![](./imgscreen/three.png) 
+![](./imgscreens/three.png) 
 
-![](./imgscreen/four.png) 
+![](./imgscreens/four.png) 
 
-![](./imgscreen/five.png) 
+![](./imgscreens/five.png) 
 
-![](./imgscreen/six.png) 
+![](./imgscreens/six.png) 
 
-![](./imgscreen/seven.png) 
+![](./imgscreens/seven.png) 
 
-![](./imgscreen/eight.png) 
+![](./imgscreens/eight.png) 
 
 
 # QQ交流群
