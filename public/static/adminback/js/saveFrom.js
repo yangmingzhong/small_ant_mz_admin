@@ -20,8 +20,9 @@ layui.use(['form'], function () {
                         window.location.href=res.url;
                     }
                     var iframeIndex = parent.layer.getFrameIndex(window.name);
-                    parent.layer.close(iframeIndex);
                     parent.layui.table.reload("currentTableId");
+                    parent.layer.close(iframeIndex);
+                   
                 });
             } else {
                 layer.msg(res.msg, {anim: 6});
